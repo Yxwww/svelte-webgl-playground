@@ -318,7 +318,7 @@ export const geometry = [
   0,
   150,
   0,
-];
+]
 
 export const color = [
   // left column front
@@ -640,4 +640,4 @@ export const color = [
   160,
   160,
   220,
-];
+]

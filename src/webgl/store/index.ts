@@ -1,18 +1,18 @@
-import { createStore, Action, combineReducers, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
+import { createStore, Action, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
 const initial = {
   rotation: [1, 0, 1],
   translation: [50, 50, 50],
   scaleVec: [0.51, 0.86, 1],
-};
-export type CameraState = typeof initial;
+}
+export type CameraState = typeof initial
 
-export const UPDATE_CAMERA = "camera/update_state";
+export const UPDATE_CAMERA = 'camera/update_state'
 
 export interface UpdateAction extends Action {
-  type: typeof UPDATE_CAMERA;
-  state: typeof initial;
+  type: typeof UPDATE_CAMERA
+  state: typeof initial
 }
 
 function camera(state = initial, action: UpdateAction) {
@@ -21,10 +21,10 @@ function camera(state = initial, action: UpdateAction) {
       return {
         ...state,
         ...action.state,
-      };
+      }
     }
     default: {
-      return state;
+      return state
     }
   }
 }
@@ -33,9 +33,9 @@ export const store = createStore(
   combineReducers({
     camera,
   }),
-  applyMiddleware(thunk),
-);
+  applyMiddleware(thunk)
+)
 
 export interface AppState {
-  camera: CameraState;
+  camera: CameraState
 }
