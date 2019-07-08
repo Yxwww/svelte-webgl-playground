@@ -1,11 +1,15 @@
 <script>
   import { onMount } from 'svelte';
-  import { createPrograms, getGLRenderingContext, drawScene, store, startRotation} from './webgl';
+  import { createPrograms, getGLRenderingContext, drawScene, store} from './webgl';
   import { writable, get, derived } from 'svelte/store';
   import { tweened } from 'svelte/motion';
   import { cubicOut } from 'svelte/easing';
   let started;
   let canvasElement;
+  const camera = tweened({
+    rotation: [0, 0, 0],
+
+  })
   const rotation = writable([0, 0, 0])
   const tweenedRotation = tweened(get(rotation), {easing: cubicOut, duration: 2000})
   onMount(async() => {
@@ -19,13 +23,13 @@
   function handleClick() {
     tweenedRotation.update(([x, y, z]) => [x, y, z+1])
   }
-  
+
 </script>
 
 <style>
-	h1 {
-		color: purple;
-	}
+  h1 {
+    color: purple;
+  }
 </style>
 
 <h1>{JSON.stringify($tweenedRotation)}</h1>

@@ -50,6 +50,7 @@ export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
 
     const state = store.getState()
     const { translation, scaleVec } = camera(state)
+    console.log(translation, scaleVec)
 
     gl.uniform4fv(colorUniformLocation, [0.5, 0.5, 0.5, 1])
 

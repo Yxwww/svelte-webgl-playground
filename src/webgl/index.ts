@@ -1,6 +1,5 @@
 export { createPrograms, getGLRenderingContext } from './app'
 export { drawScene } from './scene'
-export { startRotation } from './store/actions'
 export { store } from './store'
 
 export function createCanvas(): HTMLCanvasElement {
