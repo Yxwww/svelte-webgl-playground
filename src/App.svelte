@@ -7,7 +7,7 @@
   let started;
   let canvasElement;
   const rotation = writable([0, 0, 0])
-  const tweenedRotation = tweened(get(rotation), {easing: cubicOut})
+  const tweenedRotation = tweened(get(rotation), {easing: cubicOut, duration: 2000})
   onMount(async() => {
     const gl = getGLRenderingContext(canvasElement);
     const program = createPrograms(gl);
