@@ -1,22 +1,55 @@
 <script>
   import { onMount } from 'svelte';
-  import { createPrograms, getGLRenderingContext, drawScene, store, startRotation} from './webgl';
+  import { createPrograms, getGLRenderingContext, drawScene, store} from './webgl';
+  import { writable, get, derived } from 'svelte/store';
+  import { tweened } from 'svelte/motion';
+  import { cubicOut } from 'svelte/easing';
+  function rand() {
+    return Math.random();
+  }
   let started;
   let canvasElement;
+  const DEFAULT_ROTATION = [0, 0, 0];
+  const DEFAULT_TRANSLATION = [50, 50, 50]
+  const SCALE_VEC = [1, 1, 1]
+
+  const rotation = tweened(DEFAULT_ROTATION, {easing: cubicOut, duration: 2000});
+  const translation = tweened(DEFAULT_TRANSLATION, {easing: cubicOut});
+  const scaleVec = tweened(SCALE_VEC, {easing: cubicOut, duration: 1000});
+  const cameraStore = derived([rotation, translation, scaleVec], ([$rotation, $transition, $scaleVec]) => ({
+    rotation: $rotation, translation: $transition, scaleVec: $scaleVec
+  }))
+
   onMount(async() => {
     const gl = getGLRenderingContext(canvasElement);
     const program = createPrograms(gl);
     const draw = drawScene(gl, program);
-
-    store.dispatch(startRotation()).subscribe(draw);
+    cameraStore.subscribe(({rotation, translation, scaleVec}) => {
+      draw(rotation, translation, scaleVec);
+    })
   })
+
+  function handleClick() {
+    rotation.update(([x, y, z]) => [x+rand(), y+rand(), z+rand()])
+  }
+  function incScale() {
+    scaleVec.update(([x, y, z]) => [x+rand(), y+rand(), z+rand()])
+  }
+  function reset() {
+    rotation.set(DEFAULT_ROTATION)
+    translation.set(DEFAULT_TRANSLATION)
+    scaleVec.set(SCALE_VEC)
+  }
 </script>
 
 <style>
-	h1 {
-		color: purple;
-	}
+  h1 {
+    color: purple;
+  }
 </style>
 
-
+<button on:click={handleClick}>rotation</button>
+<button on:click={incScale}>scale</button>
+<button on:click={reset}>reset</button>
+<pre>{JSON.stringify($cameraStore, null, 2)}</pre>
 <canvas width="800" height="800" bind:this={canvasElement}></canvas>

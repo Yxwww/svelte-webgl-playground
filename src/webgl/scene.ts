@@ -36,7 +36,7 @@ export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
   setColors(gl)
 
-  return function draw() {
+  return function draw(rotation: any, translation: any, scaleVec: any) {
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
@@ -49,7 +49,6 @@ export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
     gl.useProgram(program)
 
     const state = store.getState()
-    const { rotation, translation, scaleVec } = camera(state)
 
     gl.uniform4fv(colorUniformLocation, [0.5, 0.5, 0.5, 1])
 

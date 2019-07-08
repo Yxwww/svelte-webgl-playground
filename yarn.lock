@@ -2459,6 +2459,11 @@ rimraf@2.6.3, rimraf@^2.6.1, rimraf@^2.6.3:
   dependencies:
     glob "^7.1.3"
 
+rollup-plugin-analyzer@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-analyzer/-/rollup-plugin-analyzer-3.1.1.tgz#669e5fb5f5379ec4412982fa7677bb5b0ee7d6fb"
+  integrity sha512-9lW3TT1TM0L4+PBPydEcZkXzwgbJbVZe6LpSJm9einQHp9ZPCGfq1dzzAyw2GjfAytzXncKTlCdLvsrxMYqNjA==
+
 rollup-plugin-commonjs@^9.3.4:
   version "9.3.4"
   resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-9.3.4.tgz#2b3dddbbbded83d45c36ff101cdd29e924fd23bc"

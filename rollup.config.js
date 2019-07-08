@@ -1,4 +1,5 @@
 import svelte from 'rollup-plugin-svelte';
+import analyze from 'rollup-plugin-analyzer'
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
@@ -18,7 +19,7 @@ export default {
   },
   plugins: [
     replace({
-      'process.env.NODE_ENV': JSON.stringify( 'production' )
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     typescript(),
     svelte({
@@ -46,6 +47,7 @@ export default {
     // If we're building for production (npm run build
     // instead of npm run dev), minify
     production && terser(),
+    production && analyze(),
   ],
   watch: {
     clearScreen: false,
