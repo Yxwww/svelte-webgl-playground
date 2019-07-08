@@ -2563,7 +2563,12 @@ sade@^1.4.0:
   dependencies:
     mri "^1.1.0"
 
-safe-buffer@^5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
+safe-buffer@^5.1.2:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.0.tgz#b74daec49b1148f88c64b68d49b1e815c1f2f519"
+  integrity sha512-fZEwUGbVl7kouZs1jCdMLdt95hdIv0ZeHg6L7qPeciMZhZ+/gdesW4wgTARkrFWEpspjEATAzUGPG8N2jJiwbg==
+
+safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
@@ -2919,9 +2924,9 @@ supports-color@^6.1.0:
     has-flag "^3.0.0"
 
 svelte@^3.0.0:
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.6.4.tgz#6b04e9b261af17e2ee9b3bf92104e8a0dbcd35ff"
-  integrity sha512-oI2FAZK4iLUKwwf/ltn9Y9185+03LX3uMzKlVnLrkW5P1xazJnCOHBX5mI5FeyhSIPIyueTQtqJ9cQaEUMMXgA==
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.6.5.tgz#699d1ac8c7d7fb0fe581b9c0cf719a9fda36422e"
+  integrity sha512-9H7IczBJChcqdmF7AeIw0S39EgS76StLL8gDVTrDfgb/nfZHBgxFYJ35zar7Ua+AekyLETKVw81hZ1Zel4YcUA==
 
 symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"
