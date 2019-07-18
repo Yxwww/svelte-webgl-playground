@@ -42,7 +42,6 @@
     scaleVec.set(SCALE_VEC)
   }
   function handleSlideValueChange(e) {
-    console.log(e.detail)
   }
 </script>
 

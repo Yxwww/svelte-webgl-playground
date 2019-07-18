@@ -31,7 +31,8 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "rxjs": "^6.5.2",
-    "sirv-cli": "^0.4.4"
+    "sirv-cli": "^0.4.4",
+    "wyx-utils": "^0.1.0"
   },
   "scripts": {
     "build": "rollup -c",

@@ -3153,6 +3153,11 @@ ws@^1.1.5:
     options ">=0.0.5"
     ultron "1.0.x"
 
+wyx-utils@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/wyx-utils/-/wyx-utils-0.1.1.tgz#e2cd1593ec424e31ce79b27e04fa98a307d43f41"
+  integrity sha512-un8NWTkNlwoK/BGITBIerFNi2zDixiZXnoVaMJW929AQwj5jI1YoP+Eh8MA5S8FbvqHQqemHbTlOGnZleJQKtg==
+
 yallist@^3.0.0, yallist@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-3.0.3.tgz#b4b049e314be545e3ce802236d6cd22cd91c3de9"
