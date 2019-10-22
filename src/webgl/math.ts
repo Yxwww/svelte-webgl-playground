@@ -170,9 +170,6 @@ export function perspective(
 ) {
   var f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians)
   var rangeInv = 1.0 / (near - far)
-  console.log(
-      {fov: fieldOfViewInRadians, f, rangeInv, near, far,}
-  );
 
   // prettier-ignore
   return [

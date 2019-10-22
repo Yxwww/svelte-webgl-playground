@@ -1,7 +1,7 @@
 <script>
   import Slider from './components/Slider.svelte';
   import { onMount } from 'svelte';
-  import { createPrograms, getGLRenderingContext, drawScene, store} from './webgl';
+  import { createPrograms, getGLRenderingContext, drawScene, store, perspective} from './webgl';
   import { writable, get, derived } from 'svelte/store';
   import { tweened } from 'svelte/motion';
   import { cubicOut } from 'svelte/easing';
@@ -24,7 +24,8 @@
   onMount(async() => {
     const gl = getGLRenderingContext(canvasElement);
     const program = createPrograms(gl);
-    const draw = drawScene(gl, program);
+    const projection = perspective(60 * Math.PI/180, gl.canvas.clientWidth / gl.canvas.clientHeight, 1, 2000);
+    const draw = drawScene(gl, program, projection);
     cameraStore.subscribe(({rotation, translation, scaleVec}) => {
       draw(rotation, translation, scaleVec);
     })

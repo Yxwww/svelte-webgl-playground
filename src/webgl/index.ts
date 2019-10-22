@@ -1,6 +1,7 @@
 export { createPrograms, getGLRenderingContext } from './app'
 export { drawScene } from './scene'
 export { store } from './store'
+export * from './math'
 
 export function createCanvas(): HTMLCanvasElement {
   const canvas = document.createElement('canvas')

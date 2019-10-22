@@ -22,10 +22,7 @@ function setGeometry(gl: WebGLRenderingContext) {
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(geometry), gl.STATIC_DRAW)
 }
 
-export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
-    const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
-    const zNear = 0.1;
-    const zFar  = 2000;
+export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram, projection: any) {
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
   const colorUniformLocation = gl.getUniformLocation(program, 'u_color')
   const matrixUniformLocation = gl.getUniformLocation(program, 'u_matrix')
@@ -56,8 +53,7 @@ export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
 
     gl.uniform4fv(colorUniformLocation, [0.5, 0.5, 0.5, 1])
 
-    console.log({ aspect, zNear, zFar});
-    let matrix = perspective(60 * Math.PI/180, aspect, zNear, zFar)// makeZToVMatrix(10)
+    let matrix = projection// makeZToVMatrix(10)
     // console.log(matrix);
     // matrix = m4.multiply(
     //   matrix,
