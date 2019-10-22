@@ -11,7 +11,7 @@
   let started;
   let canvasElement;
   const DEFAULT_ROTATION = [0, 0, 0];
-  const DEFAULT_TRANSLATION = [50, 50, 50]
+  const DEFAULT_TRANSLATION = [-150, 0, -360]
   const SCALE_VEC = [1, 1, 1]
 
   const rotation = tweened(DEFAULT_ROTATION, {easing: cubicOut, duration: 2000});

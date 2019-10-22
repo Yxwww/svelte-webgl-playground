@@ -7,6 +7,7 @@ import {
   scale,
   makeZToVMatrix,
   m4,
+  perspective,
 } from './math'
 import { geometry, color } from './data/f'
 import { store } from './store'
@@ -22,6 +23,9 @@ function setGeometry(gl: WebGLRenderingContext) {
 }
 
 export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
+    const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    const zNear = 0.1;
+    const zFar  = 2000;
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
   const colorUniformLocation = gl.getUniformLocation(program, 'u_color')
   const matrixUniformLocation = gl.getUniformLocation(program, 'u_matrix')
@@ -52,11 +56,13 @@ export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
 
     gl.uniform4fv(colorUniformLocation, [0.5, 0.5, 0.5, 1])
 
-    let matrix = makeZToVMatrix(1)
-    matrix = m4.multiply(
-      matrix,
-      projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400)
-    )
+    console.log({ aspect, zNear, zFar});
+    let matrix = perspective(60 * Math.PI/180, aspect, zNear, zFar)// makeZToVMatrix(10)
+    // console.log(matrix);
+    // matrix = m4.multiply(
+    //   matrix,
+    //   projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400)
+    // )
     matrix = translate(matrix, translation[0], translation[1], translation[2])
     matrix = xRotate(matrix, rotation[0])
     matrix = yRotate(matrix, rotation[1])

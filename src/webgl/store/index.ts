@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 
 const initial = {
   rotation: [1, 0, 1],
-  translation: [50, 50, 50],
+  translation: [-150, 0, 360],
   scaleVec: [0.51, 0.86, 1],
 }
 export type CameraState = typeof initial
