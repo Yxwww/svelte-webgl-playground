@@ -2924,9 +2924,9 @@ supports-color@^6.1.0:
     has-flag "^3.0.0"
 
 svelte@^3.0.0:
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.6.4.tgz#6b04e9b261af17e2ee9b3bf92104e8a0dbcd35ff"
-  integrity sha512-oI2FAZK4iLUKwwf/ltn9Y9185+03LX3uMzKlVnLrkW5P1xazJnCOHBX5mI5FeyhSIPIyueTQtqJ9cQaEUMMXgA==
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.12.1.tgz#ddfacd43272ac3255907c682b74ee7d3d8b06b0c"
+  integrity sha512-t29WJNjHIqfrdMcVXqIyRfgLEaNz7MihKXTpb8qHlbzvf0WyOOIhIlwIGvl6ahJ9+9CLJwz0sjhFNAmPgo8BHg==
 
 symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"
