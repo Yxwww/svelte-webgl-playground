@@ -22,7 +22,7 @@ function setGeometry(gl: WebGLRenderingContext) {
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(geometry), gl.STATIC_DRAW)
 }
 
-export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram, projection: any) {
+export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram, viewProjectionMatrix: any) {
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
   const colorUniformLocation = gl.getUniformLocation(program, 'u_color')
   const matrixUniformLocation = gl.getUniformLocation(program, 'u_matrix')
@@ -53,18 +53,19 @@ export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram, proj
 
     gl.uniform4fv(colorUniformLocation, [0.5, 0.5, 0.5, 1])
 
-    let matrix = projection// makeZToVMatrix(10)
+    // let matrix = projection// makeZToVMatrix(10)
     // console.log(matrix);
     // matrix = m4.multiply(
     //   matrix,
     //   projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400)
     // )
-    matrix = translate(matrix, translation[0], translation[1], translation[2])
-    matrix = xRotate(matrix, rotation[0])
-    matrix = yRotate(matrix, rotation[1])
-    matrix = zRotate(matrix, rotation[2])
-    matrix = scale(matrix, scaleVec[0], scaleVec[1], scaleVec[2])
-    gl.uniformMatrix4fv(matrixUniformLocation, false, matrix)
+    // matrix = translate(matrix, translation[0], translation[1], translation[2])
+    // matrix = xRotate(matrix, rotation[0])
+    // matrix = yRotate(matrix, rotation[1])
+    // matrix = zRotate(matrix, rotation[2])
+    // matrix = scale(matrix, scaleVec[0], scaleVec[1], scaleVec[2])
+    // gl.uniformMatrix4fv(matrixUniformLocation, false, matrix)
+
 
     // send color data
     gl.enableVertexAttribArray(colorLocation)
@@ -100,5 +101,25 @@ export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram, proj
     var offset = 0
     var count = 16 * 6
     gl.drawArrays(primitiveType, offset, count)
+    const numFs = 5;
+    const radius = 200;
+    for (var ii = 0; ii < numFs; ++ii) {
+        var angle = ii * Math.PI * 2 / numFs;
+        var x = Math.cos(angle) * radius;
+        var y = Math.sin(angle) * radius
+
+        // starting with the view projection matrix
+        // compute a matrix for the F
+        var matrix = translate(viewProjectionMatrix, x, 0, y);
+
+        // Set the matrix.
+        gl.uniformMatrix4fv(matrixUniformLocation, false, matrix);
+
+        // Draw the geometry.
+        var primitiveType = gl.TRIANGLES;
+        var offset = 0;
+        var count = 16 * 6;
+        gl.drawArrays(primitiveType, offset, count);
+    }
   }
 }
