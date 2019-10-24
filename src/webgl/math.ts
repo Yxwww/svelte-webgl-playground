@@ -322,3 +322,10 @@ export function toDegree(radians: number) {
 }
 
 
+
+export function degToRad (degree: number) {
+    return degree * Math.PI / 180
+}
+export function radToDeg (degree: number) {
+    return degree * 180 / Math.PI;
+}

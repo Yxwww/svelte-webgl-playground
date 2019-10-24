@@ -1,7 +1,7 @@
 <script>
   import Slider from './components/Slider.svelte';
   import { onMount } from 'svelte';
-  import { createPrograms, getGLRenderingContext, drawScene, store, perspective, inverse, m4, translate} from './webgl';
+  import { createPrograms, getGLRenderingContext, drawScene, store, perspective, inverse, m4, translate, degToRad} from './webgl';
   import { writable, get, derived } from 'svelte/store';
   import { tweened } from 'svelte/motion';
   import { cubicOut } from 'svelte/easing';
@@ -10,7 +10,7 @@
   }
   let started;
   let canvasElement;
-  const DEFAULT_ROTATION = [0, 0, 0];
+  const DEFAULT_ROTATION = [degToRad(190), degToRad(40), degToRad(320)] //[0, 0, 0];
   const DEFAULT_TRANSLATION = [-150, 0, -360]
   const SCALE_VEC = [1, 1, 1]
 
