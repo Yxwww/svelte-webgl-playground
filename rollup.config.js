@@ -1,7 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import analyze from 'rollup-plugin-analyzer'
 import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+// import commonjs from 'rollup-plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript';
@@ -21,7 +21,6 @@ export default {
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
-    typescript(),
     svelte({
       // enable run-time checks when not in production
       dev: !production,
@@ -38,8 +37,9 @@ export default {
     // consult the documentation for details:
     // https://github.com/rollup/rollup-plugin-commonjs
     resolve({ browser: true }),
-    commonjs(),
+    // commonjs(),
 
+    typescript(),
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
     !production && livereload('public'),
