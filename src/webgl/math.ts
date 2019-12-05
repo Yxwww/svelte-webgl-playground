@@ -293,7 +293,7 @@ export function makeZToVMatrix(fudgeFactor: number) {
 
 /**
  * It will adjust the units so they are in clip space, it will do the math so that we can choose a field of view by angle and it will let us choose our Z-clipping space. It assumes there's an eye or camera at the origin (0, 0, 0) and given a zNear and a fieldOfView it computes what it would take so that stuff at zNear ends up at Z = -1 and stuff at zNear that is half of fieldOfView above or below the center ends up with Y = -1 and Y = 1 respectively.
-  * It computes what to use for X by just multiplying by the aspect passed in. We'd normally set this to the width / height of the display area. Finally, it figures out how much to scale things in Z so that stuff at zFar ends up at Z = 1
+ * It computes what to use for X by just multiplying by the aspect passed in. We'd normally set this to the width / height of the display area. Finally, it figures out how much to scale things in Z so that stuff at zFar ends up at Z = 1
  */
 export function perspective(
   fieldOfViewInRadians: number,
@@ -321,11 +321,9 @@ export function toDegree(radians: number) {
   return (radians * 180) / Math.PI
 }
 
-
-
-export function degToRad (degree: number) {
-    return degree * Math.PI / 180
+export function degToRad(degree: number) {
+  return (degree * Math.PI) / 180
 }
-export function radToDeg (degree: number) {
-    return degree * 180 / Math.PI;
+export function radToDeg(degree: number) {
+  return (degree * 180) / Math.PI
 }
