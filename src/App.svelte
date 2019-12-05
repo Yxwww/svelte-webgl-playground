@@ -1,5 +1,4 @@
 <script>
-  import Slider from './components/Slider.svelte';
   import { onMount } from 'svelte';
   import { createPrograms, getGLRenderingContext, drawScene, store, perspective, inverse, m4, translate, degToRad} from './webgl';
   import { writable, get, derived } from 'svelte/store';
@@ -57,7 +56,6 @@
   }
 </style>
 
-<Slider on:value={handleSlideValueChange} />
 <button on:click={handleClick}>rotation</button>
 <button on:click={incScale}>scale</button>
 <button on:click={reset}>reset</button>
