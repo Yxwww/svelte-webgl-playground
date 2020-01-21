@@ -1,4 +1,4 @@
-import {m4, translate} from "../math";
+import { m4, translate } from '../math'
 
 /* eslint-disable */
 
