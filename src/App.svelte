@@ -25,12 +25,13 @@
     const program = createPrograms(gl);
     const projectionMatrix = perspective(60 * Math.PI/180, gl.canvas.clientWidth / gl.canvas.clientHeight, 1, 2000);
     const radius = 200;
-    var cameraMatrix = m4.yRotation(30);
-    cameraMatrix = translate(cameraMatrix, 0, 0, radius * 1.5);
-    const viewMatrix = inverse(cameraMatrix);
-    var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
-    const draw = drawScene(gl, program, viewProjectionMatrix);
+
     cameraStore.subscribe(({rotation, translation, scaleVec}) => {
+        var cameraMatrix = m4.yRotation(rotation[1]);
+        cameraMatrix = translate(cameraMatrix, 0, 0, radius * 1.5);
+        const viewMatrix = inverse(cameraMatrix);
+        var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
+        const draw = drawScene(gl, program, viewProjectionMatrix);
       draw(rotation, translation, scaleVec);
     })
   })
@@ -48,6 +49,9 @@
   }
   function handleSlideValueChange(e) {
   }
+  function radiusChanged(e) {
+      rotation.update(([x, y, z]) => [x+rand(), e.srcElement.value, z+rand()]);
+  }
 </script>
 
 <style>
@@ -59,5 +63,8 @@
 <button on:click={handleClick}>rotation</button>
 <button on:click={incScale}>scale</button>
 <button on:click={reset}>reset</button>
+
+<input type="number" on:change={radiusChanged} min="0" max="180" value="30">
+
 <pre>{JSON.stringify($cameraStore, null, 2)}</pre>
 <canvas width="800" height="800" bind:this={canvasElement}></canvas>
