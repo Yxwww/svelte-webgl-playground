@@ -213,6 +213,16 @@ export const m4 = {
   scaling: function(sx: number, sy: number, sz: number) {
     return [sx, 0, 0, 0, 0, sy, 0, 0, 0, 0, sz, 0, 0, 0, 0, 1]
   },
+  vectorMultiply: function(v: any, m: any) {
+    var dst = []
+    for (var i = 0; i < 4; ++i) {
+      dst[i] = 0.0
+      for (var j = 0; j < 4; ++j) {
+        dst[i] += v[j] * m[j * 4 + i]
+      }
+    }
+    return dst
+  },
 
   multiply,
   orthographic: function(

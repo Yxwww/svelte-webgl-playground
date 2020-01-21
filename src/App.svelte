@@ -25,7 +25,7 @@
     const program = createPrograms(gl);
     const projectionMatrix = perspective(60 * Math.PI/180, gl.canvas.clientWidth / gl.canvas.clientHeight, 1, 2000);
     const radius = 200;
-    var cameraMatrix = m4.yRotation(0);
+    var cameraMatrix = m4.yRotation(30);
     cameraMatrix = translate(cameraMatrix, 0, 0, radius * 1.5);
     const viewMatrix = inverse(cameraMatrix);
     var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
