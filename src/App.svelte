@@ -28,8 +28,14 @@
 
     const draw = drawScene(gl, program);
     cameraStore.subscribe(({rotation, translation, scaleVec}) => {
-      console.log(rotation);
-      var cameraMatrix = translate(m4.yRotation(rotation[1]), 0, 0, radius * 1.5);
+      const rotationMatrix = m4.multiply(
+        m4.multiply(
+          m4.xRotation(rotation[0]), 
+          m4.yRotation(rotation[1])
+        ),
+        m4.zRotation(rotation[2])
+      );
+      var cameraMatrix = translate(rotationMatrix, 0, 0, radius * 1.5);
       const viewMatrix = inverse(cameraMatrix);
       var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
       draw(viewProjectionMatrix);
