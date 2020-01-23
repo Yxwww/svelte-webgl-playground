@@ -22,11 +22,7 @@ function setGeometry(gl: WebGLRenderingContext) {
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(geometry), gl.STATIC_DRAW)
 }
 
-export function drawScene(
-  gl: WebGLRenderingContext,
-  program: WebGLProgram,
-  viewProjectionMatrix: any
-) {
+export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
   const colorUniformLocation = gl.getUniformLocation(program, 'u_color')
   const matrixUniformLocation = gl.getUniformLocation(program, 'u_matrix')
@@ -41,7 +37,7 @@ export function drawScene(
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
   setColors(gl)
 
-  return function draw(rotation: any, translation: any, scaleVec: any) {
+  return function draw(viewProjectionMatrix: any) {
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
@@ -114,7 +110,6 @@ export function drawScene(
       // starting with the view projection matrix
       // compute a matrix for the F
       var matrix = translate(viewProjectionMatrix, x, 0, y)
-      console.log(x, y)
 
       // Set the matrix.
       gl.uniformMatrix4fv(matrixUniformLocation, false, matrix)

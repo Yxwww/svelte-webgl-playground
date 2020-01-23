@@ -26,13 +26,13 @@
     const projectionMatrix = perspective(60 * Math.PI/180, gl.canvas.clientWidth / gl.canvas.clientHeight, 1, 2000);
     const radius = 200;
 
+    const draw = drawScene(gl, program);
     cameraStore.subscribe(({rotation, translation, scaleVec}) => {
-        var cameraMatrix = m4.yRotation(rotation[1]);
-        cameraMatrix = translate(cameraMatrix, 0, 0, radius * 1.5);
-        const viewMatrix = inverse(cameraMatrix);
-        var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
-        const draw = drawScene(gl, program, viewProjectionMatrix);
-      draw(rotation, translation, scaleVec);
+      console.log(rotation);
+      var cameraMatrix = translate(m4.yRotation(rotation[1]), 0, 0, radius * 1.5);
+      const viewMatrix = inverse(cameraMatrix);
+      var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
+      draw(viewProjectionMatrix);
     })
   })
 
