@@ -11,6 +11,9 @@
   let canvasElement;
   let container;
   let drag = false;
+  let dragState = {
+    start: [0, 0],
+  }
   const DEFAULT_ROTATION = [degToRad(190), degToRad(40), degToRad(320)] //[0, 0, 0];
   const DEFAULT_TRANSLATION = [-150, 0, -360]
   const SCALE_VEC = [1, 1, 1]
@@ -21,11 +24,12 @@
   const cameraStore = derived([rotation, translation, scaleVec], ([$rotation, $transition, $scaleVec]) => ({
     rotation: $rotation, translation: $transition, scaleVec: $scaleVec
   }))
+
   function clicked(e) {
     console.log('clicked', e);
   }
   function dragging(e) {
-    console.log('dragging', e);
+    console.log('dragging', e.vecFromStart);
   }
   function mouseup(e) {
     if (!drag) {
@@ -39,19 +43,20 @@
     if (!drag) {
       drag = true;
     }
-    dragging(e)
+    dragging({vecFromStart: subVec2(toXy(e), dragState.start)})
   }
   function mousedown(e) {
+    dragState.start = toXy(e);
     container.addEventListener('mouseup', mouseup)
     container.addEventListener('mousemove', mousemove);
   }
+
   onMount(async() => {
     container.addEventListener('mousedown', mousedown);
     const gl = getGLRenderingContext(canvasElement);
     const program = createPrograms(gl);
     const projectionMatrix = perspective(60 * Math.PI/180, gl.canvas.clientWidth / gl.canvas.clientHeight, 1, 2000);
     const radius = 200;
-
     const draw = createScene(gl, program);
     cameraStore.subscribe(({rotation, translation, scaleVec}) => {
       const rotationMatrix = m4.multiply(
@@ -67,6 +72,13 @@
       draw(viewProjectionMatrix);
     })
   })
+
+  function subVec2([x1, y1], [x2, y2]) {
+    return [x1-x2, y1-y2];
+  }
+  function toXy(e) {
+    return [e.pageX, e.pageY]
+  }
 
   function handleClick() {
     rotation.update(([x, y, z]) => [x+rand(), y+rand(), z+rand()])
