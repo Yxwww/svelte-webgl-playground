@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { createPrograms, getGLRenderingContext, drawScene, store, perspective, inverse, m4, translate, degToRad} from './webgl';
+  import { createPrograms, getGLRenderingContext, createScene, store, perspective, inverse, m4, translate, degToRad} from './webgl';
   import { writable, get, derived } from 'svelte/store';
   import { tweened } from 'svelte/motion';
   import { cubicOut } from 'svelte/easing';
@@ -9,6 +9,8 @@
   }
   let started;
   let canvasElement;
+  let container;
+  let drag = false;
   const DEFAULT_ROTATION = [degToRad(190), degToRad(40), degToRad(320)] //[0, 0, 0];
   const DEFAULT_TRANSLATION = [-150, 0, -360]
   const SCALE_VEC = [1, 1, 1]
@@ -19,14 +21,38 @@
   const cameraStore = derived([rotation, translation, scaleVec], ([$rotation, $transition, $scaleVec]) => ({
     rotation: $rotation, translation: $transition, scaleVec: $scaleVec
   }))
-
+  function clicked(e) {
+    console.log('clicked', e);
+  }
+  function dragging(e) {
+    console.log('dragging', e);
+  }
+  function mouseup(e) {
+    if (!drag) {
+      clicked(e);
+    }
+    drag = false;
+    container.removeEventListener('mouseup', mouseup);
+    container.removeEventListener('mousemove', mousemove);
+  }
+  function mousemove(e) {
+    if (!drag) {
+      drag = true;
+    }
+    dragging(e)
+  }
+  function mousedown(e) {
+    container.addEventListener('mouseup', mouseup)
+    container.addEventListener('mousemove', mousemove);
+  }
   onMount(async() => {
+    container.addEventListener('mousedown', mousedown);
     const gl = getGLRenderingContext(canvasElement);
     const program = createPrograms(gl);
     const projectionMatrix = perspective(60 * Math.PI/180, gl.canvas.clientWidth / gl.canvas.clientHeight, 1, 2000);
     const radius = 200;
 
-    const draw = drawScene(gl, program);
+    const draw = createScene(gl, program);
     cameraStore.subscribe(({rotation, translation, scaleVec}) => {
       const rotationMatrix = m4.multiply(
         m4.multiply(
@@ -73,4 +99,6 @@
 <input type="number" on:change={radiusChanged} min="0" max="180" value="30">
 
 <pre>{JSON.stringify($cameraStore, null, 2)}</pre>
-<canvas width="800" height="800" bind:this={canvasElement}></canvas>
+<div bind:this={container}>
+  <canvas width="800" height="800" bind:this={canvasElement}></canvas>
+</div>

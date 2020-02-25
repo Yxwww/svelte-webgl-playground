@@ -22,7 +22,7 @@ function setGeometry(gl: WebGLRenderingContext) {
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(geometry), gl.STATIC_DRAW)
 }
 
-export function drawScene(gl: WebGLRenderingContext, program: WebGLProgram) {
+export function createScene(gl: WebGLRenderingContext, program: WebGLProgram) {
   const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
   const colorUniformLocation = gl.getUniformLocation(program, 'u_color')
   const matrixUniformLocation = gl.getUniformLocation(program, 'u_matrix')

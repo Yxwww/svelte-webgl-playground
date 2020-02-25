@@ -1,5 +1,5 @@
 export { createPrograms, getGLRenderingContext } from './app'
-export { drawScene } from './scene'
+export { createScene } from './scene'
 export { store } from './store'
 export * from './math'
 
