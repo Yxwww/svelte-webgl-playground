@@ -52,25 +52,26 @@
   }
 
   onMount(async() => {
+
     container.addEventListener('mousedown', mousedown);
     const gl = getGLRenderingContext(canvasElement);
     const program = createPrograms(gl);
     const projectionMatrix = perspective(60 * Math.PI/180, gl.canvas.clientWidth / gl.canvas.clientHeight, 1, 2000);
     const radius = 200;
     const draw = createScene(gl, program);
-    cameraStore.subscribe(({rotation, translation, scaleVec}) => {
-      const rotationMatrix = m4.multiply(
-        m4.multiply(
-          m4.xRotation(rotation[0]), 
-          m4.yRotation(rotation[1])
-        ),
-        m4.zRotation(rotation[2])
-      );
-      var cameraMatrix = translate(rotationMatrix, 0, 0, radius * 1.5);
-      const viewMatrix = inverse(cameraMatrix);
-      var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
-      draw(viewProjectionMatrix);
-    })
+      cameraStore.subscribe(({rotation, translation, scaleVec}) => {
+          const rotationMatrix = m4.multiply(
+              m4.multiply(
+                  m4.xRotation(rotation[0]), 
+                  m4.yRotation(rotation[1])
+              ),
+              m4.zRotation(rotation[2])
+          );
+          var cameraMatrix = translate(rotationMatrix, 0, 0, radius * 1.5);
+          const viewMatrix = inverse(cameraMatrix);
+          var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
+          draw(viewProjectionMatrix);
+      })
   })
 
   function subVec2([x1, y1], [x2, y2]) {
@@ -110,7 +111,9 @@
 
 <input type="number" on:change={radiusChanged} min="0" max="180" value="30">
 
+<div>
 <pre>{JSON.stringify($cameraStore, null, 2)}</pre>
+</div>
 <div bind:this={container}>
   <canvas width="800" height="800" bind:this={canvasElement}></canvas>
 </div>

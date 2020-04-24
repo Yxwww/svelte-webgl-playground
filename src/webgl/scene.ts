@@ -9,63 +9,57 @@ import {
   // m4,
   // perspective,
 } from './math'
-import { geometry, color } from './data/f'
-import { store } from './store'
-// import { camera } from './store/selectors'
-// import { startRotation } from './store/actions'
+import { F_GEOMETRY, F_COLOR } from './data/f'
 
-function setColors(gl: WebGLRenderingContext) {
-  gl.bufferData(gl.ARRAY_BUFFER, new Uint8Array(color), gl.STATIC_DRAW)
-}
-
-function setGeometry(gl: WebGLRenderingContext) {
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(geometry), gl.STATIC_DRAW)
+function createGLContext(gl: WebGLRenderingContext, program: WebGLProgram) {
+  return {
+    getAttributePosition(name: string) {
+      return gl.getAttribLocation(program, name)
+    },
+    getUniformLocation(name: string) {
+      return gl.getUniformLocation(program, name)
+    },
+    setBufferData(array: any) {
+      gl.bufferData(gl.ARRAY_BUFFER, array, gl.STATIC_DRAW)
+    },
+    createBuffer() {
+      const buffer = gl.createBuffer()
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+      return buffer
+    },
+  }
 }
 
 export function createScene(gl: WebGLRenderingContext, program: WebGLProgram) {
-  const positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
-  const colorUniformLocation = gl.getUniformLocation(program, 'u_color')
-  const matrixUniformLocation = gl.getUniformLocation(program, 'u_matrix')
-  const colorLocation = gl.getAttribLocation(program, 'a_color')
+  const {
+    getAttributePosition,
+    setBufferData,
+    createBuffer,
+    getUniformLocation,
+  } = createGLContext(gl, program)
 
-  const positionBuffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-  setGeometry(gl)
+  const positionAttributeLocation = getAttributePosition('a_position')
+  const colorUniformLocation = getUniformLocation('u_color')
+  const matrixUniformLocation = getUniformLocation('u_matrix')
+  const colorLocation = getAttributePosition('a_color')
+
+  const positionBuffer = createBuffer()
+  setBufferData(new Float32Array(F_GEOMETRY))
 
   // Create buffer for colors
-  var colorBuffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-  setColors(gl)
+  const colorBuffer = createBuffer()
+  setBufferData(new Uint8Array(F_COLOR))
 
   return function draw(viewProjectionMatrix: any) {
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-
     gl.clearColor(0, 0, 0, 0)
     gl.clear(gl.COLOR_BUFFER_BIT)
     gl.enable(gl.CULL_FACE)
     // Enable the depth buffer
     gl.enable(gl.DEPTH_TEST)
-
     gl.useProgram(program)
-
-    const state = store.getState()
-
     gl.uniform4fv(colorUniformLocation, [0.5, 0.5, 0.5, 1])
-
-    // let matrix = projection// makeZToVMatrix(10)
-    // console.log(matrix);
-    // matrix = m4.multiply(
-    //   matrix,
-    //   projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400)
-    // )
-    // matrix = translate(matrix, translation[0], translation[1], translation[2])
-    // matrix = xRotate(matrix, rotation[0])
-    // matrix = yRotate(matrix, rotation[1])
-    // matrix = zRotate(matrix, rotation[2])
-    // matrix = scale(matrix, scaleVec[0], scaleVec[1], scaleVec[2])
-    // gl.uniformMatrix4fv(matrixUniformLocation, false, matrix)
-
     // send color data
     gl.enableVertexAttribArray(colorLocation)
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)

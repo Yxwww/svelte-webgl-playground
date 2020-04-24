@@ -142,9 +142,9 @@ for (var ii = 0; ii < rawGeometry.length; ii += 3) {
     rawGeometry[ii + 2] = vector[2];
 }
 
-export const geometry = rawGeometry;
+export const F_GEOMETRY = rawGeometry;
 
-export const color = [
+export const F_COLOR = [
   // left column front
   200,
   70,
