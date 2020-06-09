@@ -6,11 +6,11 @@ function createProgram(
   vertexShader: WebGLShader,
   fragmentShader: WebGLShader
 ) {
-  var program = gl.createProgram()
+  const program = gl.createProgram()
   gl.attachShader(program, vertexShader)
   gl.attachShader(program, fragmentShader)
   gl.linkProgram(program)
-  var success = gl.getProgramParameter(program, gl.LINK_STATUS)
+  const success = gl.getProgramParameter(program, gl.LINK_STATUS)
   if (success) {
     return program
   }
@@ -25,10 +25,10 @@ export function getGLRenderingContext(
 }
 
 function createShader(gl: WebGLRenderingContext, type: number, source: string) {
-  var shader = gl.createShader(type)
+  const shader = gl.createShader(type)
   gl.shaderSource(shader, source)
   gl.compileShader(shader)
-  var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS)
+  const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS)
   if (success) {
     return shader
   }
@@ -39,8 +39,8 @@ function createShader(gl: WebGLRenderingContext, type: number, source: string) {
 
 function resize(canvas: HTMLCanvasElement) {
   // Lookup the size the browser is displaying the canvas.
-  var displayWidth = canvas.clientWidth
-  var displayHeight = canvas.clientHeight
+  const displayWidth = canvas.clientWidth
+  const displayHeight = canvas.clientHeight
 
   // Check if the canvas is not the same size.
   if (canvas.width != displayWidth || canvas.height != displayHeight) {

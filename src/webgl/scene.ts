@@ -96,14 +96,14 @@ export function createScene(gl: WebGLRenderingContext, program: WebGLProgram) {
     gl.drawArrays(primitiveType, offset, count)
     const numFs = 5
     const radius = 200
-    for (var ii = 0; ii < numFs; ++ii) {
-      var angle = (ii * Math.PI * 2) / numFs
-      var x = Math.cos(angle) * radius
-      var y = Math.sin(angle) * radius
+    for (let ii = 0; ii < numFs; ++ii) {
+      const angle = (ii * Math.PI * 2) / numFs
+      const x = Math.cos(angle) * radius
+      const y = Math.sin(angle) * radius
 
       // starting with the view projection matrix
       // compute a matrix for the F
-      var matrix = translate(viewProjectionMatrix, x, 0, y)
+      const matrix = translate(viewProjectionMatrix, x, 0, y)
 
       // Set the matrix.
       gl.uniformMatrix4fv(matrixUniformLocation, false, matrix)

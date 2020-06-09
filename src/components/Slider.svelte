@@ -1,44 +1,44 @@
 <script>
   import {createEventDispatcher, onMount, onDestroy} from 'svelte';
   import clipping from 'wyx-utils/src/number/clipping'
-  const dispatch = createEventDispatcher();
-  let value = 0;
+  const dispatch = createEventDispatcher()
+  let value = 0
 
-  let dragging = false;
+  let dragging = false
   const currentPos = {
     x: 0,
-    y: 0
+    y: 0,
   }
-  let element, container;
+  let element, container
   function mousedown(e) {
-    dragging = true;
+    dragging = true
   }
   function onmousemove(e) {
     if (!dragging) {
-      return;
+      return
     }
-    const {pageX} = e;
-    currentPos.x = clipping(0, 200, pageX);
-    dispatch('value', {value: currentPos.x / 200})
+    const { pageX } = e
+    currentPos.x = clipping(0, 200, pageX)
+    dispatch('value', { value: currentPos.x / 200 })
 
-    element.style.left = `${currentPos.x}px`;
-    element.style.top = `${currentPos.y}px`;
+    element.style.left = `${currentPos.x}px`
+    element.style.top = `${currentPos.y}px`
   }
 
   function onmouseup(e) {
     if (!dragging) {
-      return;
+      return
     }
-    dragging = false;
+    dragging = false
   }
   onMount(() => {
-    document.body.addEventListener('mousemove', onmousemove);
+    document.body.addEventListener('mousemove', onmousemove)
     document.body.addEventListener('mouseup', onmouseup)
   })
   onDestroy(() => {
     document.body.removeEventListener('mousemove', onmousemove)
     document.body.removeEventListener('mouseup', onmouseup)
-  });
+  })
 </script>
 
 <style>
