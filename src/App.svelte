@@ -52,7 +52,6 @@
   }
 
   onMount(async() => {
-
     container.addEventListener('mousedown', mousedown);
     const gl = getGLRenderingContext(canvasElement);
     const program = createPrograms(gl);
@@ -60,13 +59,13 @@
     const radius = 200;
     const draw = createScene(gl, program);
       cameraStore.subscribe(({rotation, translation, scaleVec}) => {
-          const rotationMatrix = m4.multiply(
+          const rotationMatrix = m4.multiply(m4.multiply(
               m4.multiply(
                   m4.xRotation(rotation[0]), 
                   m4.yRotation(rotation[1])
               ),
               m4.zRotation(rotation[2])
-          );
+          ), m4.scaling(...scaleVec));
           var cameraMatrix = translate(rotationMatrix, 0, 0, radius * 1.5);
           const viewMatrix = inverse(cameraMatrix);
           var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix);
