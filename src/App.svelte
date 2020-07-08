@@ -13,6 +13,7 @@
   import { derived } from 'svelte/store'
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
+  import EntityDemo from './EntityDemo.svelte'
   function rand() {
     return Math.random()
   }
@@ -36,7 +37,7 @@
       translation: $transition,
       scaleVec: $scaleVec,
     })
-)
+  )
 
   function clicked(e) {
     console.log('clicked', e)
@@ -132,3 +133,5 @@
 <div bind:this={container}>
   <canvas width="800" height="800" bind:this={canvasElement}></canvas>
 </div>
+<h2>Entity Demo</h2>
+<EntityDemo />
