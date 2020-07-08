@@ -69,6 +69,10 @@
     container.addEventListener('mousedown', mousedown)
     const gl = getGLRenderingContext(canvasElement)
     const program = createPrograms(gl)
+    if (!program) {
+      alert('Error creating program');
+      return;
+    }
     const projectionMatrix = perspective(
       (60 * Math.PI) / 180,
       gl.canvas.clientWidth / gl.canvas.clientHeight,

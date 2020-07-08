@@ -7,6 +7,9 @@ function createProgram(
   fragmentShader: WebGLShader
 ) {
   const program = gl.createProgram()
+  if (!program) {
+    throw new Error('Error creating program.')
+  }
   gl.attachShader(program, vertexShader)
   gl.attachShader(program, fragmentShader)
   gl.linkProgram(program)
@@ -20,12 +23,15 @@ function createProgram(
 
 export function getGLRenderingContext(
   canvas: HTMLCanvasElement
-): WebGLRenderingContext {
+): WebGLRenderingContext | null {
   return canvas.getContext('webgl')
 }
 
 function createShader(gl: WebGLRenderingContext, type: number, source: string) {
   const shader = gl.createShader(type)
+  if (!shader) {
+    throw new Error(`Error creation shader: ${type} - ${source}`)
+  }
   gl.shaderSource(shader, source)
   gl.compileShader(shader)
   const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS)
@@ -50,9 +56,14 @@ function resize(canvas: HTMLCanvasElement) {
   }
 }
 
-export function createPrograms(gl: WebGLRenderingContext) {
+export function createPrograms(
+  gl: WebGLRenderingContext
+): WebGLProgram | undefined {
   const vertextShader = createShader(gl, gl.VERTEX_SHADER, vertextShaderSrc)
   const fragShader = createShader(gl, gl.FRAGMENT_SHADER, fragShaderSrc)
+  if (!vertextShader || !fragShader) {
+    return
+  }
   const program = createProgram(gl, vertextShader, fragShader)
   return program
 }
