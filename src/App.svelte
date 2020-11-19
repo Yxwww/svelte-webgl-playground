@@ -22,7 +22,7 @@
   let dragState = {
     start: [0, 0],
   }
-  const DEFAULT_ROTATION = [degToRad(190), degToRad(40), degToRad(320)] //[0, 0, 0];
+  const DEFAULT_ROTATION = [degToRad(0), degToRad(0), degToRad(0)] //[0, 0, 0];
   const DEFAULT_TRANSLATION = [-150, 0, -360]
   const SCALE_VEC = [1, 1, 1]
 
