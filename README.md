@@ -1,6 +1,8 @@
 # svelte-webgl-playground
 
-A place to play with svelte and webgl
+Learning WebGL
+
+<img src="./thumbnail.png" width="500" />
 
 ## Setup
 

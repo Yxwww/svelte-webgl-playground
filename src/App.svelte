@@ -136,3 +136,4 @@
 <div bind:this={container}>
   <canvas width="800" height="800" bind:this={canvasElement}></canvas>
 </div>
+<h1>what is up</h1>
