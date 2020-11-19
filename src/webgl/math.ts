@@ -185,35 +185,35 @@ export function inverse(m: any) {
 }
 
 export const m4 = {
-  translation: function(tx: number, ty: number, tz: number) {
+  translation: function (tx: number, ty: number, tz: number) {
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, tx, ty, tz, 1]
   },
 
-  xRotation: function(angleInRadians: number) {
+  xRotation: function (angleInRadians: number) {
     const c = Math.cos(angleInRadians)
     const s = Math.sin(angleInRadians)
 
     return [1, 0, 0, 0, 0, c, s, 0, 0, -s, c, 0, 0, 0, 0, 1]
   },
 
-  yRotation: function(angleInRadians: number) {
+  yRotation: function (angleInRadians: number) {
     const c = Math.cos(angleInRadians)
     const s = Math.sin(angleInRadians)
 
     return [c, 0, -s, 0, 0, 1, 0, 0, s, 0, c, 0, 0, 0, 0, 1]
   },
 
-  zRotation: function(angleInRadians: number) {
+  zRotation: function (angleInRadians: number) {
     const c = Math.cos(angleInRadians)
     const s = Math.sin(angleInRadians)
 
     return [c, s, 0, 0, -s, c, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   },
 
-  scaling: function(sx: number, sy: number, sz: number) {
+  scaling: function (sx: number, sy: number, sz: number) {
     return [sx, 0, 0, 0, 0, sy, 0, 0, 0, 0, sz, 0, 0, 0, 0, 1]
   },
-  vectorMultiply: function(v: any, m: any) {
+  vectorMultiply: function (v: any, m: any) {
     const dst = []
     for (let i = 0; i < 4; ++i) {
       dst[i] = 0.0
@@ -225,7 +225,7 @@ export const m4 = {
   },
 
   multiply,
-  orthographic: function(
+  orthographic: function (
     left: number,
     right: number,
     bottom: number,

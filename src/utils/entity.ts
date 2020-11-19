@@ -15,7 +15,7 @@ export function createStore<T>(initialState: T) {
       ...state,
       ...newState,
     }
-    subscribers.forEach(fn => fn(state))
+    subscribers.forEach((fn) => fn(state))
   }
   function getState() {
     return {

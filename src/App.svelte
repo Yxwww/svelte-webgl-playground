@@ -69,8 +69,8 @@
     const gl = getGLRenderingContext(canvasElement)
     const program = createPrograms(gl)
     if (!program) {
-      alert('Error creating program');
-      return;
+      alert('Error creating program')
+      return
     }
     const projectionMatrix = perspective(
       (60 * Math.PI) / 180,
