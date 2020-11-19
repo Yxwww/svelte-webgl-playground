@@ -1,14 +1,38 @@
+import autoPreprocess from 'svelte-preprocess'
+import typescript from '@rollup/plugin-typescript'
 import svelte from 'rollup-plugin-svelte'
-import analyze from 'rollup-plugin-analyzer'
-import resolve from 'rollup-plugin-node-resolve'
-// import commonjs from 'rollup-plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
-import typescript from 'rollup-plugin-typescript'
 import glslify from 'rollup-plugin-glslify'
-import replace from 'rollup-plugin-replace'
 
 const production = !process.env.ROLLUP_WATCH
+
+function serve() {
+  let server
+
+  function toExit() {
+    if (server) server.kill(0)
+  }
+
+  return {
+    writeBundle() {
+      if (server) return
+      server = require('child_process').spawn(
+        'npm',
+        ['run', 'start', '--', '--dev'],
+        {
+          stdio: ['ignore', 'inherit', 'inherit'],
+          shell: true,
+        }
+      )
+
+      process.on('SIGTERM', toExit)
+      process.on('exit', toExit)
+    },
+  }
+}
 
 export default {
   input: 'src/main.js',
@@ -16,31 +40,31 @@ export default {
     sourcemap: true,
     format: 'iife',
     name: 'app',
-    file: 'public/bundle.js',
+    file: 'public/build/bundle.js',
   },
   plugins: [
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
     svelte({
       // enable run-time checks when not in production
       dev: !production,
       // we'll extract any component CSS out into
-      // a separate file — better for performance
+      // a separate file - better for performance
       css: css => {
-        css.write('public/bundle.css')
+        css.write('bundle.css')
       },
+      preprocess: autoPreprocess(),
     }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
-    // some cases you'll need additional configuration —
+    // some cases you'll need additional configuration -
     // consult the documentation for details:
-    // https://github.com/rollup/rollup-plugin-commonjs
-    resolve({ browser: true }),
+    // https://github.com/rollup/plugins/tree/master/packages/commonjs
+    resolve({
+      browser: true,
+      dedupe: ['svelte'],
+    }),
     // commonjs(),
-
-    typescript(),
+    typescript({ sourceMap: !production }),
     glslify({
       // Default
       include: ['**/*.vs', '**/*.fs', '**/*.vert', '**/*.frag', '**/*.glsl'],
@@ -51,6 +75,11 @@ export default {
       // Compress shader by default using logic from rollup-plugin-glsl
       // compress: true,
     }),
+
+    // In dev mode, call `npm run start` once
+    // the bundle has been generated
+    !production && serve(),
+
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
     !production && livereload('public'),
@@ -58,7 +87,6 @@ export default {
     // If we're building for production (npm run build
     // instead of npm run dev), minify
     production && terser(),
-    production && analyze(),
   ],
   watch: {
     clearScreen: false,

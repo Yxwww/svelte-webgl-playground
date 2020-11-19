@@ -323,17 +323,17 @@ export function perspective(
     ]
 }
 
-export function toRadians(degree: number) {
+export function toRadians(degree: number): number {
   return (degree * Math.PI) / 180
 }
 
-export function toDegree(radians: number) {
+export function toDegree(radians: number): number {
   return (radians * 180) / Math.PI
 }
 
-export function degToRad(degree: number) {
+export function degToRad(degree: number): number {
   return (degree * Math.PI) / 180
 }
-export function radToDeg(degree: number) {
+export function radToDeg(degree: number): number {
   return (degree * 180) / Math.PI
 }
