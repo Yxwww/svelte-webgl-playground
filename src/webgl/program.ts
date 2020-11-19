@@ -39,7 +39,6 @@ function createShader(gl: WebGLRenderingContext, type: number, source: string) {
     return shader
   }
 
-  console.log(gl.getShaderInfoLog(shader))
   gl.deleteShader(shader)
 }
 
