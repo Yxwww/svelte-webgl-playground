@@ -10,6 +10,7 @@
     translate,
     degToRad,
 } from './webgl'
+
   import { derived } from 'svelte/store'
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
@@ -73,13 +74,13 @@
       return
     }
     const projectionMatrix = perspective(
-      (60 * Math.PI) / 180,
-      gl.canvas.clientWidth / gl.canvas.clientHeight,
+      degToRad(60),
+      gl.canvas.width / gl.canvas.width,
       1,
       2000
     )
     const radius = 200
-    const draw = createScene(gl, program)
+    const { draw } = createScene(gl, program)
     cameraStore.subscribe(({ rotation, translation, scaleVec }) => {
       const rotationMatrix = m4.multiply(
         m4.multiply(
@@ -93,6 +94,9 @@
       var viewProjectionMatrix = m4.multiply(projectionMatrix, viewMatrix)
       draw(viewProjectionMatrix)
     })
+    return () => {
+      console.log('destroy ')
+    }
   })
 
   function subVec2([x1, y1], [x2, y2]) {
