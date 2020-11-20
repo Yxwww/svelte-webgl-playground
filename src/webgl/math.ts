@@ -297,7 +297,7 @@ export function projection(width: number, height: number, depth: number) {
   ]
 }
 
-export function makeZToVMatrix(fudgeFactor: number) {
+export function makeZToVMatrix(fudgeFactor: number): number[] {
   return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, fudgeFactor, 0, 0, 0, 1]
 }
 
@@ -310,7 +310,7 @@ export function perspective(
   aspect: number,
   near: number,
   far: number
-) {
+): number[] {
   const f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians)
   const rangeInv = 1.0 / (near - far)
 
@@ -336,4 +336,26 @@ export function degToRad(degree: number): number {
 }
 export function radToDeg(degree: number): number {
   return (degree * 180) / Math.PI
+}
+
+type Matrix = Float32Array
+
+export function glMatrix() {
+  return {
+    create() {
+      return new Float32Array(16)
+    },
+    createOrthographic() {
+      return
+    },
+    createPerspective() {
+      return
+    },
+    createFrustrum() {
+      return
+    },
+    scale(M: Matrix, vec3: Vec3): Matrix {
+      return new Float32Array(16)
+    },
+  }
 }
